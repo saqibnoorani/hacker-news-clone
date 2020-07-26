@@ -7,10 +7,10 @@ import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types'; // ES6
 import Moment from 'react-moment';
 import { fetchArticles } from '../actions';
+import { hideArticle } from '../actions';
 import { Chart } from 'react-google-charts';
 const HomePage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
-
   const nextPage = () => {
     setPageNumber(pageNumber + 1);
     loadArticles(pageNumber)
@@ -19,6 +19,11 @@ const HomePage = (props) => {
     setPageNumber(pageNumber - 1);
     loadArticles(pageNumber)
   };
+
+  const hideStory = (id) => {
+    hideNews(id);
+
+  }
   const date = new Date();
 
   const parseURL = (url) => {
@@ -36,7 +41,7 @@ const HomePage = (props) => {
             style={{ border: 0, cellPadding: 0, cellSpacing: 0, width: `${100}%` }}
             className="itemlist"
           >
-            <tbody>
+            <tbody style={{ fontSize: 'small' }}>
               <tr className="athing row" id="23953944">
                 <td style={{ align: 'right', valign: 'top' }} className="title col-md-1 col-sm-1">
                   <span>{article.num_comments}</span>
@@ -61,6 +66,7 @@ const HomePage = (props) => {
                     </Moment>{' '}
                     days ago.
                   </span>
+                  <span style={{ cursor: 'pointer' }} onClick={() => { hideStory(article.objectID) }}> [Hide]</span>
                 </td>
               </tr>
             </tbody>
@@ -71,10 +77,10 @@ const HomePage = (props) => {
   };
 
   const renderChart = () => {
-    debugger;
     return (
       <Chart
         height={'300px'}
+        width={'100%'}
         chartType="LineChart"
         loader={<div>Loading Chart</div>}
         data={props.charts}
@@ -106,7 +112,7 @@ const HomePage = (props) => {
   };
 
   const { fetchArticles: loadArticles } = props;
-
+  const { hideArticle: hideNews } = props;
   useEffect(() => {
     window.scrollTo(0, 0);
     loadArticles();
@@ -116,20 +122,20 @@ const HomePage = (props) => {
       <table
         className="table-active"
         id="hnmain"
-        style={{ border: 0, cellPadding: 0, cellSpacing: 0, width: '100%', bgcolor: '#f6f6ef' }}
+        style={{ border: 0, cellPadding: 0, cellSpacing: 0, width: '85%', bgcolor: '#f6f6ef' }}
       >
         <tbody>
           <tr>
             <td bgcolor="#ff6600">
               <table
-                style={{ border: 0, cellPadding: 0, cellSpacing: 0, width: '100%', padding: '2px' }}
+                style={{ border: 0, cellPadding: 0, cellSpacing: 0, width: '85%', padding: '2px' }}
               >
                 <tbody>
-                  <tr className="row text-light">
-                    <td className="col-md-1 col-sm-1 m-r-1 pt-md-4">Comments</td>
-                    <td className="col-md-1 col-sm-1 m-r-1 ">Vote Count</td>
-                    <td className="col-md-1 col-sm-1 m-r-1 pt-md-4">UpVote</td>
-                    <td className="col-md-8 col-sm-8 pt-md-4">News Details</td>
+                  <tr style={{ fontSize: 'smaller' }} className="row text-light">
+                    <td className="col-md-1 col-sm-1 m-r-1 pt-md-4 pt-1 ml-2">Comments</td>
+                    <td className="col-md-1 col-sm-1 m-r-1 pt-1 ml-2">Vote Count</td>
+                    <td className="col-md-1 col-sm-1 m-r-1 pt-md-4 pt-1 ml-2">UpVote</td>
+                    <td className="col-md-8 col-sm-8 pt-md-4 pt-1 ml-2">News Details</td>
                   </tr>
                 </tbody>
               </table>
@@ -139,7 +145,7 @@ const HomePage = (props) => {
           {renderArticles()}
           <tr id="pagespace" title="" style={{ height: '10px' }}>
             <td style={{ textAlign: 'end', color: '#ff6600' }}>
-              <span>
+              <span style={{ cursor: 'pointer' }}>
                 {pageNumber > 1 ? <span onClick={previousPage}>Previous |</span> : ''}
                 <span onClick={nextPage}>Next</span>
               </span>
@@ -191,15 +197,17 @@ HomePage.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.any),
   chartData: PropTypes.arrayOf(PropTypes.any),
   fetchArticles: PropTypes.func,
+  hideArticle: PropTypes.func,
 };
 
 HomePage.defaultProps = {
   articles: [],
   chartData: [],
   fetchArticles: null,
+  hideArticle: null
 };
 
 export default {
-  component: connect(mapStateToProps, { fetchArticles })(HomePage),
+  component: connect(mapStateToProps, { fetchArticles, hideArticle })(HomePage),
   loadData,
 };

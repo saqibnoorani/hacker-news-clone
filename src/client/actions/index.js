@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const FETCH_ARTICLES = 'fetch_articles';
 export const UPDATE_CHARTS = 'update_charts';
+export const HIDE_ARTICLE = 'HIDE_ARTICLE';
 export const fetchArticles = (page) => async (dispatch) => {
   let url;
   if (page) {
@@ -35,3 +36,13 @@ export const fetchArticles = (page) => async (dispatch) => {
     payload: [columns, ...chartData],
   });
 };
+
+
+export const hideArticle = (objectID) => (dispatch) => {
+  debugger;
+  dispatch({
+    type: HIDE_ARTICLE,
+    payload: objectID
+  });
+
+}
