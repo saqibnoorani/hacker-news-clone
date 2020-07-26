@@ -1,4 +1,4 @@
-# SSR Hacker News - React
+# SSR Hacker News - React ![Node.js CI](https://github.com/saqibnoorani/hacker-news-clone/workflows/Node.js%20CI/badge.svg?branch=master)
 
 React Server Side Rendering demo project. This project uses [HackerNews API](https://hn.algolia.com/api/v1/) under the hood.
 
