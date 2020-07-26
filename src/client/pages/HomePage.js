@@ -12,12 +12,14 @@ import { Chart } from 'react-google-charts';
 const HomePage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
   const nextPage = () => {
-    setPageNumber(pageNumber + 1);
-    loadArticles(pageNumber)
+    let count = pageNumber;
+    setPageNumber(count += 1);
+    loadArticles(count)
   };
   const previousPage = () => {
-    setPageNumber(pageNumber - 1);
-    loadArticles(pageNumber)
+    let count = pageNumber;
+    setPageNumber(count -= 1);
+    loadArticles(count)
   };
 
   const hideStory = (id) => {
