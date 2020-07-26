@@ -1,6 +1,6 @@
 {
   "name": "react-ssr-hacker-news",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hacker News Clone",
   "engines": {
     "node": "10.14.2"
