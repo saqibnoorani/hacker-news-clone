@@ -2,7 +2,7 @@
 
 React Server Side Rendering demo project. This project uses [HackerNews API](https://hn.algolia.com/api/v1/) under the hood.
 
-Demo: [Click to see DEMO]()
+Demo: [Click to see DEMO](https://ycombinator-clone.herokuapp.com/)
 
 
 ## Getting Started
@@ -28,7 +28,7 @@ Run on local
 $ npm run dev
 ```
 
-Navigate to [http://localhost:3000](http://localhost:3000)
+Navigate to [http://localhost:3000](http://localhost:5000)
 
 ## Deployment
 

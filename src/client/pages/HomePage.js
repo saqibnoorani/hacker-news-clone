@@ -100,7 +100,7 @@ const HomePage = (props) => {
           content="Latest Hacker News Articles"
         />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" to="https://react-ssr-ilker.herokuapp.com" />
+        <link rel="canonical" to="https://ycombinator-clone.herokuapp.com/" />
       </Helmet>
     );
   };
