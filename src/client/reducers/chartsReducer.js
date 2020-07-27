@@ -5,7 +5,6 @@ export default (state = [], action) => {
         case UPDATE_CHARTS:
             return action.payload;
         case HIDE_ARTICLE:
-            debugger;
             return state.filter(art => art[0] !== action.payload);
         default:
             return state;
