@@ -12,6 +12,10 @@ export default [
         exact: true
       },
       {
+        ...HomePage,
+        path: '/:id',
+      },
+      {
         ...NotFoundPage
       }
     ]

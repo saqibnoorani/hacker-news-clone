@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types'; // ES6
 import Moment from 'react-moment';
-import { fetchArticles } from '../actions';
-import { hideArticle } from '../actions';
+import { fetchArticles, hideArticle, upVote } from '../actions';
 import { Chart } from 'react-google-charts';
 const HomePage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -25,6 +24,10 @@ const HomePage = (props) => {
   const hideStory = (id) => {
     hideNews(id);
 
+  }
+
+  const voteUp = (id) => {
+    increaseVote(id);
   }
   const date = new Date();
 
@@ -49,11 +52,11 @@ const HomePage = (props) => {
                   <span>{article.num_comments}</span>
                 </td>
                 <td style={{ align: 'right', valign: 'top' }} className="title col-md-1 col-sm-1">
-                  <span>{article.points}</span>
+                  <span >{article.points}</span>
                 </td>
                 <td valign="top" className="votelinks col-md-1 col-sm-1">
                   <center>
-                    <span className="fa fa-caret-up" title="upvote" />
+                    <span style={{ cursor: 'pointer' }} onClick={() => { voteUp(article.objectID) }} className="fa fa-caret-up" title="upvote" />
                   </center>
                 </td>
                 <td className="title col-md-9 col-sm-9">
@@ -115,6 +118,7 @@ const HomePage = (props) => {
 
   const { fetchArticles: loadArticles } = props;
   const { hideArticle: hideNews } = props;
+  const { upVote: increaseVote } = props;
   useEffect(() => {
     window.scrollTo(0, 0);
     loadArticles();
@@ -200,16 +204,18 @@ HomePage.propTypes = {
   chartData: PropTypes.arrayOf(PropTypes.any),
   fetchArticles: PropTypes.func,
   hideArticle: PropTypes.func,
+  upVote: PropTypes.func
 };
 
 HomePage.defaultProps = {
   articles: [],
   chartData: [],
   fetchArticles: null,
-  hideArticle: null
+  hideArticle: null,
+  upVote: null
 };
 
 export default {
-  component: connect(mapStateToProps, { fetchArticles, hideArticle })(HomePage),
+  component: connect(mapStateToProps, { fetchArticles, hideArticle, upVote })(HomePage),
   loadData,
 };
