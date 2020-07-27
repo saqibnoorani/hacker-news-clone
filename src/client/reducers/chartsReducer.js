@@ -7,7 +7,7 @@ export default (state = [], action) => {
         case HIDE_ARTICLE:
             return state.filter(art => art[0] !== action.payload);
         case UPDATE_POINTS_CHART:
-            const index = state.findIndex(art => art[0] == action.payload);
+            const index = state.findIndex(art => art[0] == action.payload.objectID);
             debugger;
             state[index][1] += 1;
             return [...state];

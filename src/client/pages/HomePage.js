@@ -27,7 +27,7 @@ const HomePage = (props) => {
   }
 
   const voteUp = (id) => {
-    increaseVote(id);
+    increaseVote(id, pageNumber);
   }
   const date = new Date();
 
@@ -121,7 +121,7 @@ const HomePage = (props) => {
   const { upVote: increaseVote } = props;
   useEffect(() => {
     window.scrollTo(0, 0);
-    loadArticles();
+    loadArticles(pageNumber);
   }, [loadArticles]);
   return (
     <center>

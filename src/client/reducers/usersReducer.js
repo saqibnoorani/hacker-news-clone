@@ -6,10 +6,10 @@ export default (state = [], action) => {
     case HIDE_ARTICLE:
       return state.filter(art => art.objectID !== action.payload);
     case INCREASE_VOTE:
-      const index = state.findIndex(art => art.objectID == action.payload);
-      const votes = JSON.parse(localStorage.getItem('votes'));
+      const index = state.findIndex(art => art.objectID == action.payload.objectID);
+      const votes = JSON.parse(localStorage.getItem((`votes${action.payload.pageNumber}`)));
       votes[index].points += 1;
-      localStorage.setItem('votes', JSON.stringify(votes))
+      localStorage.setItem(`votes${action.payload.pageNumber}`, JSON.stringify(votes));
       state[index].points += 1;
       return [...state];
     default:

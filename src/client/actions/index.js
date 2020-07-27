@@ -12,22 +12,23 @@ export const fetchArticles = (page) => async (dispatch) => {
     url = `https://hn.algolia.com/api/v1/search?page=${page}`;
   } else {
     url = `https://hn.algolia.com/api/v1/search?page=1`;
+    page = 1;
   }
 
   const res = await axios.get(url);
   const data = res.data.hits.filter(
     (hit) => hit.objectID != null && hit.points != null && hit.title !== ''
   );
-  const storedVotes = JSON.parse(localStorage.getItem("votes"))
+  const storedVotes = JSON.parse(localStorage.getItem(`votes${page}`))
   if (!storedVotes) {
     let votes = [];
     data.forEach(hit => {
       votes.push({ objectID: hit.objectID, points: hit.points })
     });
-    localStorage.setItem('votes', JSON.stringify(votes));
+    localStorage.setItem(`votes${page}`, JSON.stringify(votes));
 
   } else {
-    const localVotes = JSON.parse(localStorage.getItem('votes'))
+    const localVotes = JSON.parse(localStorage.getItem(`votes${page}`))
     data.forEach((vote, index) => {
       localVotes.forEach(element => {
         if (vote.objectID == element.objectID) {
@@ -59,7 +60,7 @@ export const fetchArticles = (page) => async (dispatch) => {
 };
 
 
-export const hideArticle = (objectID) => (dispatch) => {
+export const hideArticle = (objectID, pageNumber) => (dispatch) => {
   debugger;
   dispatch({
     type: HIDE_ARTICLE,
@@ -70,13 +71,13 @@ export const hideArticle = (objectID) => (dispatch) => {
 }
 
 
-export const upVote = (objectID) => (dispatch) => {
+export const upVote = (objectID, pageNumber) => (dispatch) => {
   dispatch({
     type: INCREASE_VOTE,
-    payload: objectID
+    payload: { objectID: objectID, pageNumber: pageNumber }
   });
   dispatch({
     type: UPDATE_POINTS_CHART,
-    payload: objectID,
+    payload: { objectID: objectID, pageNumber: pageNumber }
   });
 }
