@@ -16,10 +16,17 @@ export const fetchArticles = (page) => async (dispatch) => {
   }
 
   const res = await axios.get(url);
-  const data = res.data.hits.filter(
+  let data = res.data.hits.filter(
     (hit) => hit.objectID != null && hit.points != null && hit.title !== ''
   );
-  const storedVotes = JSON.parse(localStorage.getItem(`votes${page}`))
+  const storedVotes = JSON.parse(localStorage.getItem(`votes${page}`));
+  const deletedArticles = JSON.parse(localStorage.getItem(`article${page}`));
+
+
+  if (deletedArticles) {
+    data = data.filter(val => !deletedArticles.includes(val.objectID));
+
+  }
   if (!storedVotes) {
     let votes = [];
     data.forEach(hit => {
@@ -56,12 +63,19 @@ export const fetchArticles = (page) => async (dispatch) => {
     type: UPDATE_CHARTS,
     payload: [columns, ...chartData],
   });
-  // history.push(`/home/${page}`);
 };
 
 
 export const hideArticle = (objectID, pageNumber) => (dispatch) => {
-  debugger;
+  let deletedArticles = JSON.parse(localStorage.getItem(`article${pageNumber}`));
+  if (!deletedArticles) {
+    deletedArticles = [];
+    deletedArticles.push(objectID);
+  } else {
+    deletedArticles.push(objectID);
+  }
+
+  localStorage.setItem(`article${pageNumber}`, JSON.stringify(deletedArticles));
   dispatch({
     type: HIDE_ARTICLE,
     payload: objectID

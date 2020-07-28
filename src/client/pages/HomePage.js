@@ -22,8 +22,7 @@ const HomePage = (props) => {
   };
 
   const hideStory = (id) => {
-    hideNews(id);
-
+    hideNews(id, pageNumber);
   }
 
   const voteUp = (id) => {

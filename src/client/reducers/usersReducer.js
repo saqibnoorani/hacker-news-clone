@@ -8,7 +8,8 @@ export default (state = [], action) => {
     case INCREASE_VOTE:
       const index = state.findIndex(art => art.objectID == action.payload.objectID);
       const votes = JSON.parse(localStorage.getItem((`votes${action.payload.pageNumber}`)));
-      votes[index].points += 1;
+      const voteIndex = votes.findIndex(art => art.objectID == action.payload.objectID);
+      votes[voteIndex].points += 1;
       localStorage.setItem(`votes${action.payload.pageNumber}`, JSON.stringify(votes));
       state[index].points += 1;
       return [...state];
