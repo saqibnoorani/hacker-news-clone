@@ -39,52 +39,43 @@ const HomePage = (props) => {
 
   const renderArticles = () => {
     return props.articles.map((article) => (
-      <tr>
-        <td>
-          <table
-            style={{ border: 0, cellPadding: 0, cellSpacing: 0, width: `${100}%` }}
-            className="itemlist"
-          >
-            <tbody style={{ fontSize: 'small' }}>
-              <tr className="athing row" id="23953944">
-                <td style={{ align: 'right', valign: 'top' }} className="title col-md-1 col-sm-1">
-                  <span>{article.num_comments}</span>
-                </td>
-                <td style={{ align: 'right', valign: 'top' }} className="title col-md-1 col-sm-1">
-                  <span >{article.points}</span>
-                </td>
-                <td valign="top" className="votelinks col-md-1 col-sm-1">
-                  <center>
-                    <span style={{ cursor: 'pointer' }} onClick={() => { voteUp(article.objectID) }} className="fa fa-caret-up" title="upvote" />
-                  </center>
-                </td>
-                <td className="title col-md-9 col-sm-9">
-                  <span className="storylink font-weight-bold">{article.title}</span>
-                  <span className="sitestr badge-pill font-weight-lighter">
-                    {parseURL(article.url)} by
+      <tr className="row ml-0" style={{ width: `${100}%`, fontSize: 'small' }} >
+
+        <td className="title col-md-1 col-sm-1">
+          <span>{article.num_comments}</span>
+        </td>
+        <td className="title col-md-1 col-sm-1 ml-0">
+          <span >{article.points}</span>
+        </td>
+        <td className="col-md-1 col-sm-1 ml-0">
+          <center>
+            <span style={{ cursor: 'pointer' }} onClick={() => { voteUp(article.objectID) }} className="fa fa-caret-up" title="upvote" />
+          </center>
+        </td>
+        <td className="title col-md-9 col-sm-9 ml-0">
+          <span className="storylink font-weight-bold">{article.title}</span>
+          <span className="sitestr badge-pill font-weight-lighter">
+            {parseURL(article.url)} by
                   </span>
-                  <span>{article.author}</span>
-                  <span className="badge-pill font-weight-lighter">
-                    <Moment diff={article.created_at} unit="days">
-                      {date}
-                    </Moment>{' '}
+          <span>{article.author}</span>
+          <span className="badge-pill font-weight-lighter">
+            <Moment diff={article.created_at} unit="days">
+              {date}
+            </Moment>{' '}
                     days ago.
                   </span>
-                  <span style={{ cursor: 'pointer' }} onClick={() => { hideStory(article.objectID) }}> [Hide]</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <span style={{ cursor: 'pointer' }} onClick={() => { hideStory(article.objectID) }}> [Hide]</span>
         </td>
       </tr>
+
     ));
   };
 
   const renderChart = () => {
     return (
       <Chart
-        height={'300px'}
         width={'100%'}
+        height={'250px'}
         chartType="LineChart"
         loader={<div>Loading Chart</div>}
         data={props.charts}
@@ -127,61 +118,49 @@ const HomePage = (props) => {
       <table
         className="table-active"
         id="hnmain"
-        style={{ border: 0, cellPadding: 0, cellSpacing: 0, width: '85%', bgcolor: '#f6f6ef' }}
+        style={{ width: '85%', bgcolor: '#f6f6ef' }}
       >
-        <tbody>
-          <tr>
-            <td bgcolor="#ff6600">
-              <table
-                style={{ border: 0, cellPadding: 0, cellSpacing: 0, width: '85%', padding: '2px' }}
-              >
-                <tbody>
-                  <tr style={{ fontSize: 'smaller' }} className="row text-light">
-                    <td className="col-md-1 col-sm-1 m-r-1 pt-md-4 pt-1 ml-2">Comments</td>
-                    <td className="col-md-1 col-sm-1 m-r-1 pt-1 ml-2">Vote Count</td>
-                    <td className="col-md-1 col-sm-1 m-r-1 pt-md-4 pt-1 ml-2">UpVote</td>
-                    <td className="col-md-8 col-sm-8 pt-md-4 pt-1 ml-2">News Details</td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          <tr id="pagespace" title="" style={{ height: '15px' }}></tr>
-          {renderArticles()}
-          <tr id="pagespace" title="" style={{ height: '10px' }}>
-            <td style={{ textAlign: 'end', color: '#ff6600' }}>
-              <span style={{ cursor: 'pointer' }}>
-                {pageNumber > 1 ? <span onClick={previousPage}>Previous |</span> : ''}
-                <span onClick={nextPage}>Next</span>
-              </span>
-            </td>
-          </tr>
+        <tr bgcolor="#ff6600" style={{ fontSize: 'smaller' }} className="row text-light ml-0 mr-0">
 
-          <tr id="pagespace" title="" style={{ height: '10px' }}></tr>
-          <table width="100%" cellSpacing="0" cellPadding="1">
-            <tbody>
-              <tr>
-                <td bgcolor="#ff6600"></td>
-              </tr>
-            </tbody>
-          </table>
-          <table width="100%" cellSpacing="0" cellPadding="1">
-            <tbody>
-              <tr>
-                <td>{renderChart()}</td>
-              </tr>
-            </tbody>
-          </table>
-          <table width="100%" cellSpacing="0" cellPadding="1">
-            <tbody>
-              <tr>
-                <td bgcolor="#ff6600"></td>
-              </tr>
-            </tbody>
-          </table>
-        </tbody>
+          <td className="col-md-1 col-sm-1  pt-md-4 pt-1">Comments</td>
+          <td className="col-md-1 col-sm-1  pt-1 ">Vote Count</td>
+          <td className="col-md-1 col-sm-1 pt-md-4 pt-1">UpVote</td>
+          <td className="col-md-8 col-sm-8 pt-md-4 pt-1">News Details</td>
+        </tr>
+        {renderArticles()}
+        <tr id="pagespace" title="" style={{ height: '10px' }}>
+          <td style={{ textAlign: 'end', color: '#ff6600' }}>
+            <span style={{ cursor: 'pointer' }}>
+              {pageNumber > 1 ? <span onClick={previousPage}>Previous |</span> : ''}
+              <span onClick={nextPage}>Next</span>
+            </span>
+          </td>
+        </tr>
+
+        <tr id="pagespace" style={{ height: '10px' }}></tr>
+        <table width="100%">
+          <tbody>
+            <tr>
+              <td bgcolor="#ff6600"></td>
+            </tr>
+          </tbody>
+        </table>
+        <table width="100%">
+          <tbody>
+            <tr>
+              <td>{renderChart()}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table width="100%">
+          <tbody>
+            <tr>
+              <td bgcolor="#ff6600"></td>
+            </tr>
+          </tbody>
+        </table>
       </table>
-    </center>
+    </center >
   );
 };
 
